@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0d1117;
+  --color-bg-secondary: #12161a;
+  --color-bg-elevated: #161b22;
+  --color-accent-cyan: #89c8ff;
+  --color-accent-gold: #f2d27a;
+  --color-text-muted: #8b949e;
+  --color-border-dim: #21262d;
+  --color-border-glow: rgba(137, 200, 255, 0.25);
+
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-[#0d1117] text-white antialiased;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(137, 200, 255, 0.25);
+    color: #89c8ff;
+  }
+}
+
+@layer utilities {
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #89c8ff 0%, #5a9fd4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #f2d27a 0%, #c9a84c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .grid-blueprint {
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(137, 200, 255, 0.08) 1px, transparent 0);
+    background-size: 32px 32px;
+  }
+
+  .grid-blueprint-dense {
+    background-image:
+      linear-gradient(rgba(137, 200, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(137, 200, 255, 0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  .torn-edge {
+    clip-path: polygon(
+      0% 2%,
+      3% 0%,
+      7% 3%,
+      12% 0%,
+      18% 2%,
+      24% 0%,
+      30% 1%,
+      36% 0%,
+      42% 2%,
+      48% 0%,
+      54% 1%,
+      60% 0%,
+      66% 2%,
+      72% 0%,
+      78% 1%,
+      84% 0%,
+      90% 2%,
+      96% 0%,
+      100% 1%,
+      100% 98%,
+      97% 100%,
+      91% 98%,
+      85% 100%,
+      79% 99%,
+      73% 100%,
+      67% 98%,
+      61% 100%,
+      55% 99%,
+      49% 100%,
+      43% 98%,
+      37% 100%,
+      31% 99%,
+      25% 100%,
+      19% 98%,
+      13% 100%,
+      7% 99%,
+      0% 100%
+    );
+  }
+
+  .glow-cyan {
+    box-shadow: inset 0 0 0 1px rgba(137, 200, 255, 0.12);
+  }
+
+  .glow-gold {
+    box-shadow: inset 0 0 0 1px rgba(242, 210, 122, 0.12);
+  }
+
+  .tech-line {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(137, 200, 255, 0.4) 50%,
+      transparent 100%
+    );
+    height: 1px;
+  }
+
+  @keyframes scroll-line-flow {
+    0% {
+      transform: scaleY(0.35) translateY(-4px);
+      opacity: 0.35;
+    }
+    50% {
+      transform: scaleY(1) translateY(4px);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleY(0.35) translateY(-4px);
+      opacity: 0.35;
+    }
+  }
+
+  .scroll-line {
+    transform-origin: top center;
+    will-change: transform, opacity;
+    animation: scroll-line-flow 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+}
