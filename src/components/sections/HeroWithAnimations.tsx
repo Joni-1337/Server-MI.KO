@@ -60,7 +60,7 @@ export function HeroWithAnimations({ children }: HeroWithAnimationsProps) {
 
   return (
     <div ref={containerRef} className="relative">
-      <InteractiveGrid />
+      <InteractiveGrid boundaryRef={containerRef} />
       {children}
     </div>
   );

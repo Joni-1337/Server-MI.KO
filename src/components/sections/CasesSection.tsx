@@ -8,18 +8,18 @@ export function CasesSection() {
       <div className="bg-[#0d1117] px-6 py-10 md:px-12 lg:px-20">
         <div className="mx-auto flex max-w-6xl items-end justify-between">
           <div>
-            <span className="font-mono text-xs tracking-[0.3em] text-[#89c8ff] uppercase">
+            <span className="section-eyebrow text-[#89c8ff]">
               Портфолио
             </span>
-            <h2 id="cases-heading" className="mt-1 font-sans text-2xl font-bold md:text-3xl">
+            <h2 id="cases-heading" className="section-title">
               Выполненные задачи / Портфолио
             </h2>
-            <p className="mt-2 max-w-md font-mono text-xs text-[#8b949e]">
+            <p className="section-lead max-w-xl">
               Кейсы веб-разработки: лендинги, каталоги, калькуляторы и иммерсивные сайты для
               малого бизнеса — Брянск и Россия.
             </p>
           </div>
-          <span className="hidden font-mono text-xs text-[#8b949e] md:block">
+          <span className="hidden font-mono text-base text-[#8b949e] md:block">
             {String(cases.length).padStart(2, "0")} проектов
           </span>
         </div>

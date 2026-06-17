@@ -19,7 +19,7 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
         return (
           <article
             key={item.id}
-            className="border border-[#21262d] bg-[#12161a]"
+            className="glow-faq-item border border-[#21262d] bg-[#12161a]"
           >
             <h3>
               <button
@@ -28,7 +28,7 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
                 aria-expanded={isOpen}
                 aria-controls={`faq-panel-${item.id}`}
                 onClick={() => setOpenId(isOpen ? null : item.id)}
-                className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-sans text-base font-semibold transition-colors hover:text-[#89c8ff] md:text-lg"
+                className="nav-link-glow flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-sans text-lg font-semibold md:text-xl"
               >
                 {item.question}
                 <ChevronDown
@@ -48,7 +48,7 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
               }`}
             >
               <div className="overflow-hidden">
-                <p className="px-6 pb-6 text-sm leading-relaxed text-[#8b949e] md:text-base">
+                <p className="body-copy px-6 pb-6">
                   {item.answer}
                 </p>
               </div>

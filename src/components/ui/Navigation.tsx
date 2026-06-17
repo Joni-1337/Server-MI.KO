@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Menu, X } from "lucide-react";
-
+import { SmoothScrollLink } from "@/components/ui/SmoothScrollLink";
 const navLinks = [
   { href: "#cases", label: "Кейсы" },
   { href: "#stack", label: "Стек" },
@@ -31,33 +30,30 @@ export function Navigation() {
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-12 lg:px-20">
-        <Link
+        <SmoothScrollLink
           href="#hero"
-          className="font-mono text-sm tracking-widest text-[#89c8ff] uppercase"
+          className="logo-glow font-mono text-base tracking-widest text-[#89c8ff] uppercase"
         >
           MI<span className="text-[#f2d27a]">.</span>KO
-        </Link>
-
+        </SmoothScrollLink>
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <Link
+              <SmoothScrollLink
                 href={link.href}
-                className="font-mono text-xs tracking-wider text-[#8b949e] uppercase transition-colors hover:text-[#89c8ff]"
+                className="nav-link-glow font-mono text-sm tracking-wider text-[#8b949e] uppercase"
               >
                 {link.label}
-              </Link>
-            </li>
+              </SmoothScrollLink>            </li>
           ))}
         </ul>
 
-        <Link
+        <SmoothScrollLink
           href="#calculator"
-          className="hidden border border-[#89c8ff]/30 px-4 py-2 font-mono text-xs tracking-wider text-[#89c8ff] uppercase transition-all hover:border-[#89c8ff] hover:bg-[#89c8ff]/5 md:inline-block"
+          className="glow-btn-cyan hidden border border-[#89c8ff]/30 bg-[#89c8ff]/5 px-4 py-2 font-mono text-sm tracking-wider text-[#89c8ff] uppercase md:inline-block"
         >
           Связаться
-        </Link>
-
+        </SmoothScrollLink>
         <button
           type="button"
           className="text-[#89c8ff] md:hidden"
@@ -73,14 +69,13 @@ export function Navigation() {
           <ul className="flex flex-col gap-4 px-6 py-6">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link
+                <SmoothScrollLink
                   href={link.href}
-                  className="font-mono text-sm tracking-wider text-[#8b949e] uppercase"
+                  className="nav-link-glow font-mono text-base tracking-wider text-[#8b949e] uppercase"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
-                </Link>
-              </li>
+                </SmoothScrollLink>              </li>
             ))}
           </ul>
         </div>

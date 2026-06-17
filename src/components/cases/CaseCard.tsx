@@ -1,9 +1,24 @@
 import type { CaseStudy } from "@/config/cases";
-import { ArrowUpRight, Target, Lightbulb, TrendingUp } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Lightbulb, Target, TrendingUp } from "lucide-react";
 
 interface CaseCardProps {
   caseStudy: CaseStudy;
   index: number;
+}
+
+function renderCaseText(text: string, accentClass: string) {
+  const parts = text.split(/\[\[|\]\]/g);
+  return parts.map((part, idx) => {
+    const isHighlight = idx % 2 === 1;
+    if (!part) return null;
+    return isHighlight ? (
+      <span key={idx} className={`case-keyword ${accentClass}`}>
+        {part}
+      </span>
+    ) : (
+      <span key={idx}>{part}</span>
+    );
+  });
 }
 
 const accentMap = {
@@ -13,6 +28,7 @@ const accentMap = {
     icon: "text-[#89c8ff]",
     metric: "text-[#89c8ff]",
     glow: "glow-cyan",
+    glowPanel: "glow-panel-cyan",
   },
   gold: {
     border: "border-[#f2d27a]/20",
@@ -20,6 +36,7 @@ const accentMap = {
     icon: "text-[#f2d27a]",
     metric: "text-[#f2d27a]",
     glow: "glow-gold",
+    glowPanel: "glow-panel-gold",
   },
 };
 
@@ -38,21 +55,32 @@ export function CaseCard({ caseStudy, index }: CaseCardProps) {
         <header className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="mb-3 flex items-center gap-3">
-              <span className="font-mono text-xs tracking-[0.3em] text-[#8b949e] uppercase">
+              <span className="label-caps text-[#8b949e]">
                 Кейс {String(index + 1).padStart(2, "0")}
               </span>
-              <span className="font-mono text-xs text-[#8b949e]">/ {caseStudy.year}</span>
+              <span className="font-mono text-sm text-[#8b949e]">/ {caseStudy.year}</span>
             </div>
-            <h3 className="font-sans text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              {caseStudy.title}
-            </h3>
-            <p className="mt-2 font-mono text-sm text-[#8b949e] md:text-base">{caseStudy.subtitle}</p>
+            <div className="flex items-center gap-3 sm:gap-4">
+              <h3 className="min-w-0 flex-1 font-sans text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                {caseStudy.title}
+              </h3>
+              <a
+                href={caseStudy.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Перейти на сайт ${caseStudy.title}`}
+                className={`case-site-link ${accent.icon}`}
+              >
+                <ExternalLink className="case-site-link-icon" aria-hidden="true" />
+              </a>
+            </div>
+            <p className="mt-2 font-mono text-base text-[#8b949e] md:text-lg">{caseStudy.subtitle}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {caseStudy.tags.map((tag) => (
               <span
                 key={tag}
-                className={`rounded-none border px-3 py-1 font-mono text-xs ${accent.tag}`}
+                className={`rounded-none border px-3 py-1 font-mono text-sm ${accent.tag}`}
               >
                 {tag}
               </span>
@@ -61,28 +89,28 @@ export function CaseCard({ caseStudy, index }: CaseCardProps) {
         </header>
 
         <div className="grid gap-6 md:grid-cols-3">
-          <div className={`torn-edge border bg-[#12161a] p-6 ${accent.border}`}>
+          <div className={`glow-panel ${accent.glowPanel} torn-edge border bg-[#12161a] p-6 ${accent.border}`}>
             <div className="mb-4 flex items-center gap-2">
               <Target className={`h-4 w-4 ${accent.icon}`} />
-              <h3 className="font-mono text-xs tracking-[0.2em] text-[#8b949e] uppercase">Задача</h3>
+              <h3 className="label-caps text-[#8b949e]">Задача</h3>
             </div>
-            <p className="text-sm leading-relaxed text-[#c9d1d9] md:text-base">{caseStudy.task}</p>
+            <p className="body-copy-light">{renderCaseText(caseStudy.task, accent.metric)}</p>
           </div>
 
-          <div className={`torn-edge border bg-[#12161a] p-6 ${accent.border}`}>
+          <div className={`glow-panel ${accent.glowPanel} torn-edge border bg-[#12161a] p-6 ${accent.border}`}>
             <div className="mb-4 flex items-center gap-2">
               <Lightbulb className={`h-4 w-4 ${accent.icon}`} />
-              <h3 className="font-mono text-xs tracking-[0.2em] text-[#8b949e] uppercase">Решение</h3>
+              <h3 className="label-caps text-[#8b949e]">Решение</h3>
             </div>
-            <p className="text-sm leading-relaxed text-[#c9d1d9] md:text-base">{caseStudy.solution}</p>
+            <p className="body-copy-light">{renderCaseText(caseStudy.solution, accent.metric)}</p>
           </div>
 
-          <div className={`torn-edge border bg-[#12161a] p-6 ${accent.border}`}>
+          <div className={`glow-panel ${accent.glowPanel} torn-edge border bg-[#12161a] p-6 ${accent.border}`}>
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp className={`h-4 w-4 ${accent.icon}`} />
-              <h3 className="font-mono text-xs tracking-[0.2em] text-[#8b949e] uppercase">Итог</h3>
+              <h3 className="label-caps text-[#8b949e]">Итог</h3>
             </div>
-            <p className="text-sm leading-relaxed text-[#c9d1d9] md:text-base">{caseStudy.result}</p>
+            <p className="body-copy-light">{renderCaseText(caseStudy.result, accent.metric)}</p>
           </div>
         </div>
 
@@ -95,7 +123,7 @@ export function CaseCard({ caseStudy, index }: CaseCardProps) {
                 >
                   {metric.value}
                 </span>
-                <span className="mt-1 font-mono text-xs tracking-wider text-[#8b949e] uppercase">
+                <span className="label-caps mt-1 text-[#8b949e]">
                   {metric.label}
                 </span>
               </div>
@@ -105,7 +133,7 @@ export function CaseCard({ caseStudy, index }: CaseCardProps) {
                 href={caseStudy.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group inline-flex min-h-[2rem] items-center gap-1 font-sans text-base leading-tight font-bold sm:text-xl md:text-2xl ${accent.metric} hover:opacity-80`}
+                className={`glow-link-accent group hidden min-h-[2rem] items-center gap-1 font-sans text-lg leading-tight font-bold sm:inline-flex sm:text-xl md:text-2xl ${accent.metric}`}
               >
                 Открыть сайт
                 <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

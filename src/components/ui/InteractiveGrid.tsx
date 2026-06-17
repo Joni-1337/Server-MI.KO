@@ -1,46 +1,105 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
-export function InteractiveGrid() {
+interface InteractiveGridProps {
+  boundaryRef: RefObject<HTMLElement | null>;
+}
+
+export function InteractiveGrid({ boundaryRef }: InteractiveGridProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    const boundary = boundaryRef.current;
+    if (!el || !boundary) return;
 
     let frame = 0;
-    let visible = true;
+    let inView = true;
+    let pointerInside = false;
+    let hasMoved = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    const setActive = (active: boolean) => {
+      el.style.opacity = active ? "0.6" : "0";
+    };
+
+    const isInside = (x: number, y: number) => {
+      const rect = boundary.getBoundingClientRect();
+      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    };
+
+    const updateGlow = (x: number, y: number) => {
+      lastX = x;
+      lastY = y;
+
+      if (!hasMoved) {
+        setActive(false);
+        return;
+      }
+
+      pointerInside = isInside(x, y);
+
+      if (!inView || !pointerInside) {
+        setActive(false);
+        return;
+      }
+
+      const rect = boundary.getBoundingClientRect();
+      el.style.setProperty("--mx", `${x - rect.left}px`);
+      el.style.setProperty("--my", `${y - rect.top}px`);
+      setActive(true);
+    };
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        visible = entry.isIntersecting;
+        inView = entry.isIntersecting;
+        updateGlow(lastX, lastY);
       },
       { threshold: 0.05 },
     );
-    observer.observe(el);
+    observer.observe(boundary);
 
     const onMove = (e: MouseEvent) => {
-      if (!visible || frame) return;
+      hasMoved = true;
+      if (frame) return;
       frame = requestAnimationFrame(() => {
-        el.style.setProperty("--mx", `${e.clientX}px`);
-        el.style.setProperty("--my", `${e.clientY}px`);
+        updateGlow(e.clientX, e.clientY);
         frame = 0;
       });
     };
 
+    const onScroll = () => {
+      if (!hasMoved || frame) return;
+      frame = requestAnimationFrame(() => {
+        updateGlow(lastX, lastY);
+        frame = 0;
+      });
+    };
+
+    const onLeave = () => {
+      pointerInside = false;
+      setActive(false);
+    };
+
     window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("mouseleave", onLeave);
+
     return () => {
       observer.disconnect();
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("mouseleave", onLeave);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [boundaryRef]);
 
   return (
     <div
       ref={ref}
-      className="pointer-events-none absolute inset-0 z-0 opacity-60"
+      className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300"
       style={
         {
           "--mx": "50%",

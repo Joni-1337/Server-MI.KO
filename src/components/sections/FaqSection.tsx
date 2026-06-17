@@ -11,13 +11,13 @@ export function FaqSection() {
       <div className="absolute inset-0 grid-blueprint opacity-15" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-4xl">
-        <span className="font-mono text-xs tracking-[0.3em] text-[#f2d27a] uppercase">
+        <span className="section-eyebrow text-[#f2d27a]">
           FAQ
         </span>
-        <h2 id="faq-heading" className="mt-2 font-sans text-3xl font-bold md:text-4xl">
+        <h2 id="faq-heading" className="section-title">
           Частые вопросы о разработке сайтов
         </h2>
-        <p className="mt-4 font-mono text-sm text-[#8b949e]">
+        <p className="section-lead">
           Ответы на типичные вопросы о создании сайтов под ключ, иммерсивном дизайне и аналитике.
         </p>
 

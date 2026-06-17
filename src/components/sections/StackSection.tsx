@@ -24,13 +24,13 @@ export function StackSection() {
       <div className="absolute inset-0 grid-blueprint opacity-20" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-6xl">
-        <span className="font-mono text-xs tracking-[0.3em] text-[#89c8ff] uppercase">
+        <span className="section-eyebrow text-[#89c8ff]">
           Экспертиза
         </span>
-        <h2 id="stack-heading" className="mt-2 font-sans text-3xl font-bold md:text-4xl">
+        <h2 id="stack-heading" className="section-title">
           Технический стек и экспертиза
         </h2>
-        <p className="mt-4 max-w-2xl font-mono text-sm text-[#8b949e]">
+        <p className="section-lead max-w-2xl">
           Frontend и backend для создания сайтов под ключ: интерфейсы, анимации, формы заявок,
           каталоги и базовая серверная логика.
         </p>
@@ -42,15 +42,17 @@ export function StackSection() {
               return (
                 <article
                   key={block.id}
-                  className={`stack-block border bg-[#12161a] p-8 ${accent.border}`}
+                  className={`glow-panel stack-block border bg-[#12161a] p-8 ${accent.border} ${
+                    block.accent === "cyan" ? "glow-panel-cyan" : "glow-panel-gold"
+                  }`}
                 >
-                  <h3 className={`font-sans text-2xl font-bold ${accent.text}`}>{block.title}</h3>
-                  <p className="mt-2 font-mono text-sm text-[#8b949e]">{block.subtitle}</p>
+                  <h3 className={`font-sans text-3xl font-bold ${accent.text}`}>{block.title}</h3>
+                  <p className="mt-2 font-mono text-base text-[#8b949e] md:text-lg">{block.subtitle}</p>
 
                   <ul className="mt-6 space-y-4">
                     {block.items.map((item) => (
                       <li key={item.name}>
-                        <div className="mb-1.5 flex justify-between font-mono text-xs">
+                        <div className="mb-1.5 flex justify-between font-mono text-sm">
                           <span className="text-[#c9d1d9]">{item.name}</span>
                           <span className="text-[#8b949e]">{item.level}%</span>
                         </div>
@@ -66,7 +68,7 @@ export function StackSection() {
 
                   <ul className="mt-8 space-y-2 border-t border-[#21262d] pt-6">
                     {block.highlights.map((h) => (
-                      <li key={h} className="flex gap-2 font-mono text-xs text-[#8b949e]">
+                      <li key={h} className="flex gap-2 font-mono text-sm text-[#8b949e]">
                         <span className={accent.text}>&gt;</span>
                         {h}
                       </li>

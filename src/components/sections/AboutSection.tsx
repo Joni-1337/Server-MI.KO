@@ -1,6 +1,6 @@
 import { timeline } from "@/config/timeline";
 import { AboutAnimate } from "@/components/sections/AboutAnimate";
-
+import { HighlightedText } from "@/components/ui/HighlightedText";
 export function AboutSection() {
   return (
     <section
@@ -11,18 +11,25 @@ export function AboutSection() {
       <div className="mx-auto max-w-6xl">
         <AboutAnimate>
           <div className="about-intro">
-            <span className="font-mono text-xs tracking-[0.3em] text-[#f2d27a] uppercase">
+            <span className="section-eyebrow text-[#f2d27a]">
               О себе
             </span>
-            <h2 id="about-heading" className="mt-2 font-sans text-3xl font-bold md:text-4xl">
-              Евгений Михалин — веб-разработчик MI.KO
+            <h2 id="about-heading" className="section-title">
+              Сайты под ключ для малого бизнеса
             </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#8b949e] md:text-base">
-              Разрабатываю сайты под ключ для малого бизнеса: иммерсивные лендинги, каталоги с
-              приёмом заказов, калькуляторы стоимости и формы заявок. Работаю с Next.js, TypeScript
-              и GSAP — от идеи до production.
-            </p>
-          </div>
+            <p className="section-lead max-w-2xl">
+              <HighlightedText
+                parts={[
+                  "Меня зовут Евгений, я ",
+                  { text: "веб-разработчик", accent: "cyan" },
+                  " MI.KO. Делаю ",
+                  { text: "иммерсивные", accent: "cyan" },
+                  " лендинги, каталоги с приёмом заказов, калькуляторы стоимости и формы заявок. Работаю с Next.js, TypeScript и GSAP — от идеи до ",
+                  { text: "production", accent: "gold" },
+                  ".",
+                ]}
+              />
+            </p>          </div>
 
           <div className="timeline-track relative mt-16">
             <div
@@ -35,18 +42,20 @@ export function AboutSection() {
                 const isYearLeft = index % 2 === 0;
 
                 const yearEl = (
-                  <span className="font-mono text-4xl font-bold text-[#89c8ff]/30">
+                  <span className="font-mono text-5xl font-bold text-[#89c8ff]/30">
                     {entry.year}
                   </span>
                 );
 
                 const cardEl = (
                   <div className="torn-edge border border-[#21262d] bg-[#0d1117] p-6">
-                    <span className="font-mono text-[10px] tracking-[0.25em] text-[#f2d27a] uppercase">
+                    <span className="label-caps text-xs text-[#f2d27a] sm:text-sm">
                       {entry.tag}
                     </span>
-                    <h3 className="mt-2 font-sans text-xl font-bold">{entry.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-[#8b949e]">{entry.description}</p>
+                    <h3 className="mt-2 font-sans text-2xl font-bold md:text-[1.65rem]">{entry.title}</h3>
+                    <p className="body-copy mt-3">
+                      <HighlightedText parts={entry.description} />
+                    </p>
                   </div>
                 );
 

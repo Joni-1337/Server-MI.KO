@@ -12,6 +12,7 @@ import {
   type CalculatorState,
 } from "@/config/calculator";
 import { MAX_COMMENT_LENGTH } from "@/config/contact-form";
+import { CalculatorChip } from "@/components/calculator/CalculatorChip";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -88,98 +89,86 @@ export function CalculatorSection() {
       <div className="absolute inset-0 grid-blueprint opacity-15" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-6xl">
-        <span className="font-mono text-xs tracking-[0.3em] text-[#89c8ff] uppercase">
+        <span className="section-eyebrow text-[#89c8ff]">
           Калькулятор
         </span>
-        <h2 className="mt-2 font-sans text-3xl font-bold md:text-4xl" id="calculator-heading">
+        <h2 className="section-title" id="calculator-heading">
           Рассчитать стоимость проекта
         </h2>
-        <p className="mt-4 max-w-2xl font-mono text-sm text-[#8b949e]">
+        <p className="section-lead max-w-2xl">
           Выберите параметры — стоимость и срок обновляются мгновенно. Это предварительная оценка,
           точная цена — после короткого брифа.
         </p>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-5">
-          <div className="space-y-8 lg:col-span-3">
-            <fieldset>
-              <legend className="mb-3 font-mono text-xs tracking-wider text-[#8b949e] uppercase">
+        <div className="mt-12 grid gap-10 overflow-x-clip lg:grid-cols-5">
+          <div className="space-y-8 overflow-visible lg:col-span-3">
+            <fieldset className="overflow-visible">
+              <legend className="label-caps mb-3 text-[#8b949e]">
                 Тип сайта
               </legend>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 overflow-visible">
                 {siteTypes.map((opt) => (
-                  <button
+                  <CalculatorChip
                     key={opt.id}
-                    type="button"
+                    id={opt.id}
+                    label={opt.label}
+                    description={opt.description}
+                    accent="cyan"
+                    active={state.siteType === opt.id}
                     onClick={() => setState((s) => ({ ...s, siteType: opt.id }))}
-                    className={`border px-4 py-2 font-mono text-xs transition-colors ${
-                      state.siteType === opt.id
-                        ? "border-[#89c8ff] bg-[#89c8ff]/10 text-[#89c8ff]"
-                        : "border-[#21262d] text-[#8b949e] hover:border-[#89c8ff]/40"
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
+                  />
                 ))}
               </div>
             </fieldset>
 
-            <fieldset>
-              <legend className="mb-3 font-mono text-xs tracking-wider text-[#8b949e] uppercase">
+            <fieldset className="overflow-visible">
+              <legend className="label-caps mb-3 text-[#8b949e]">
                 Сложность дизайна
               </legend>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 overflow-visible">
                 {designLevels.map((opt) => (
-                  <button
+                  <CalculatorChip
                     key={opt.id}
-                    type="button"
+                    id={opt.id}
+                    label={opt.label}
+                    description={opt.description}
+                    accent="gold"
+                    active={state.designLevel === opt.id}
                     onClick={() => setState((s) => ({ ...s, designLevel: opt.id }))}
-                    className={`border px-4 py-2 font-mono text-xs transition-colors ${
-                      state.designLevel === opt.id
-                        ? "border-[#f2d27a] bg-[#f2d27a]/10 text-[#f2d27a]"
-                        : "border-[#21262d] text-[#8b949e] hover:border-[#f2d27a]/40"
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
+                  />
                 ))}
               </div>
             </fieldset>
 
-            <fieldset>
-              <legend className="mb-3 font-mono text-xs tracking-wider text-[#8b949e] uppercase">
+            <fieldset className="overflow-visible">
+              <legend className="label-caps mb-3 text-[#8b949e]">
                 Дополнительно
               </legend>
-              <div className="flex flex-wrap gap-2">
-                {integrations.map((opt) => {
-                  const active = state.selectedIntegrations.includes(opt.id);
-                  return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      onClick={() => toggleIntegration(opt.id)}
-                      className={`border px-4 py-2 font-mono text-xs transition-colors ${
-                        active
-                          ? "border-[#89c8ff] bg-[#89c8ff]/10 text-[#89c8ff]"
-                          : "border-[#21262d] text-[#8b949e] hover:border-[#89c8ff]/40"
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
+              <div className="flex flex-wrap gap-2 overflow-visible">
+                {integrations.map((opt) => (
+                  <CalculatorChip
+                    key={opt.id}
+                    id={opt.id}
+                    label={opt.label}
+                    description={opt.description}
+                    accent="cyan"
+                    active={state.selectedIntegrations.includes(opt.id)}
+                    onClick={() => toggleIntegration(opt.id)}
+                  />
+                ))}
               </div>
             </fieldset>
           </div>
 
           <div className="lg:col-span-2">
-            <div className="sticky top-24 border border-[#21262d] bg-[#12161a] p-6">
-              <p className="font-mono text-xs tracking-wider text-[#8b949e] uppercase">
+            <div className="glow-quote-panel sticky top-24 border border-[#21262d] bg-[#12161a] p-6">
+              <p className="label-caps text-[#8b949e]">
                 Предварительно
               </p>
-              <p className="mt-2 font-sans text-4xl font-bold text-gradient-cyan">
+              <p className="mt-2 font-sans text-4xl font-bold text-gradient-cyan md:text-5xl">
                 {formatPriceFrom(quote.totalPrice)}
               </p>
-              <p className="mt-1 font-mono text-sm text-[#f2d27a]">
+              <p className="mt-1 font-mono text-base text-[#f2d27a]">
                 ≈ {quote.totalWeeks} {quote.totalWeeks === 1 ? "неделя" : "недель"}
               </p>
 
@@ -187,7 +176,7 @@ export function CalculatorSection() {
                 {quote.breakdown.map((item) => (
                   <li
                     key={item.label}
-                    className="flex justify-between font-mono text-xs text-[#8b949e]"
+                    className="chip-text flex justify-between text-[#8b949e]"
                   >
                     <span>{item.label}</span>
                     <span>{formatPrice(item.price)}</span>
@@ -200,8 +189,8 @@ export function CalculatorSection() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#89c8ff]/40 bg-[#89c8ff]/10">
                     <Check className="h-6 w-6 text-[#89c8ff]" />
                   </div>
-                  <p className="font-mono text-sm text-[#89c8ff]">Заявка отправлена!</p>
-                  <p className="text-xs text-[#8b949e]">Свяжусь с вами в течение 24 часов.</p>
+                  <p className="font-mono text-base text-[#89c8ff]">Заявка отправлена!</p>
+                  <p className="text-sm text-[#8b949e]">Свяжусь с вами в течение 24 часов.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -210,14 +199,14 @@ export function CalculatorSection() {
                     placeholder="Имя"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full border border-[#21262d] bg-[#0d1117] px-4 py-3 font-mono text-sm outline-none focus:border-[#89c8ff]/50"
+                    className="glow-input w-full border border-[#21262d] bg-[#0d1117] px-4 py-3 font-mono text-base outline-none focus:border-[#89c8ff]/50"
                   />
                   <input
                     type="text"
                     placeholder="Telegram / Email / Телефон"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="w-full border border-[#21262d] bg-[#0d1117] px-4 py-3 font-mono text-sm outline-none focus:border-[#89c8ff]/50"
+                    className="glow-input w-full border border-[#21262d] bg-[#0d1117] px-4 py-3 font-mono text-base outline-none focus:border-[#89c8ff]/50"
                   />
                   <div>
                     <textarea
@@ -226,21 +215,21 @@ export function CalculatorSection() {
                       maxLength={MAX_COMMENT_LENGTH}
                       onChange={(e) => setMessage(e.target.value)}
                       rows={3}
-                      className="w-full resize-none border border-[#21262d] bg-[#0d1117] px-4 py-3 font-mono text-sm outline-none focus:border-[#89c8ff]/50"
+                      className="glow-input w-full resize-none border border-[#21262d] bg-[#0d1117] px-4 py-3 font-mono text-base outline-none focus:border-[#89c8ff]/50"
                     />
-                    <p className="mt-1 text-right font-mono text-[10px] text-[#8b949e]">
+                    <p className="mt-1 text-right font-mono text-xs text-[#8b949e]">
                       {message.length}/{MAX_COMMENT_LENGTH}
                     </p>
                   </div>
 
                   {status === "error" && errorText && (
-                    <p className="font-mono text-xs text-red-400">{errorText}</p>
+                    <p className="font-mono text-sm text-red-400">{errorText}</p>
                   )}
 
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="flex w-full items-center justify-center gap-2 border border-[#89c8ff]/40 bg-[#89c8ff]/5 py-3 font-mono text-xs tracking-wider text-[#89c8ff] uppercase transition-colors hover:bg-[#89c8ff]/10 disabled:opacity-50"
+                    className="glow-btn-cyan flex w-full items-center justify-center gap-2 border border-[#89c8ff]/40 bg-[#89c8ff]/5 py-3.5 font-mono text-sm tracking-wider text-[#89c8ff] uppercase disabled:opacity-50"
                   >
                     {status === "loading" ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
