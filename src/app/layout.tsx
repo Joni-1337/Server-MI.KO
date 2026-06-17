@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { JetBrains_Mono, Manrope } from "next/font/google";
 import { siteMetadata } from "@/lib/seo";
 import "./globals.css";
@@ -23,7 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${manrope.variable} ${jetbrainsMono.variable}`}>
-      <body className="min-h-screen bg-[#0d1117]">{children}</body>
+      <body className="min-h-screen bg-[#0d1117]">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
