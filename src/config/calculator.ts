@@ -39,6 +39,14 @@ export const siteTypes: CalculatorOption[] = [
     price: 100_000,
     weeks: 4,
   },
+  {
+    id: "saas",
+    label: "SaaS + личные кабинеты",
+    description:
+      "Веб-платформа с регистрацией, ролями пользователей, дашбордом и подпиской. Для сервисов и EdTech.",
+    price: 150_000,
+    weeks: 6,
+  },
 ];
 
 export const designLevels: CalculatorOption[] = [
@@ -110,6 +118,20 @@ export const integrations: CalculatorOption[] = [
     description: "Кнопки и виджеты для быстрой связи в мессенджерах прямо с сайта.",
     price: 5_000,
     weeks: 0.25,
+  },
+  {
+    id: "auth",
+    label: "Личный кабинет",
+    description: "Регистрация, вход, профиль и разграничение доступа по ролям.",
+    price: 25_000,
+    weeks: 1,
+  },
+  {
+    id: "payments",
+    label: "Онлайн-оплата",
+    description: "Подключение платёжного шлюза: разовые платежи или подписка с пробным периодом.",
+    price: 20_000,
+    weeks: 1,
   },
 ];
 

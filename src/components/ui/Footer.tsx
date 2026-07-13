@@ -12,7 +12,7 @@ export function Footer() {
         </SmoothScrollLink>
 
         <p className="font-mono text-xs tracking-wider text-[#8b949e] uppercase sm:text-sm">
-          © {new Date().getFullYear()} MI.KO · сайты для малого бизнеса
+          © {new Date().getFullYear()} MI.KO · сайты и веб-платформы
         </p>
       </div>
     </footer>

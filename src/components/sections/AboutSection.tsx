@@ -15,7 +15,7 @@ export function AboutSection() {
               О себе
             </span>
             <h2 id="about-heading" className="section-title">
-              Сайты под ключ для малого бизнеса
+              Сайты и SaaS-платформы под ключ
             </h2>
             <p className="section-lead max-w-2xl">
               <HighlightedText
@@ -24,7 +24,9 @@ export function AboutSection() {
                   { text: "веб-разработчик", accent: "cyan" },
                   " MI.KO. Делаю ",
                   { text: "иммерсивные", accent: "cyan" },
-                  " лендинги, каталоги с приёмом заказов, калькуляторы стоимости и формы заявок. Работаю с Next.js, TypeScript и GSAP — от идеи до ",
+                  " лендинги, каталоги, ",
+                  { text: "SaaS-платформы", accent: "gold" },
+                  " с личными кабинетами и оплатой, калькуляторы и формы заявок. Работаю с Next.js, TypeScript и GSAP — от идеи до ",
                   { text: "production", accent: "gold" },
                   ".",
                 ]}

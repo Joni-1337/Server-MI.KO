@@ -49,7 +49,7 @@ export function HeroSection() {  return (
           </span>
           <span className="hero-terminal-line">
             <span className="terminal-chevron text-[#89c8ff]">&gt;</span> Лендинги, каталоги,
-            калькуляторы — от 30 000 ₽
+            личные кабинеты и подписки — от 30 000 ₽
           </span>
         </div>
 
