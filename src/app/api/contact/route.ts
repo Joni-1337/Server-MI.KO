@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
-import {
-  formatContactTelegramMessage,
-  type ContactPayload,
-} from "@/lib/contact-message";
-import { sendContactEmail, getEmailErrorMessage } from "@/lib/email";
-import { sendTelegramMessage } from "@/lib/telegram";
+import { type ContactPayload } from "@/lib/contact-message";
+import { notifyContact } from "@/lib/contact-notify";
 import { MAX_COMMENT_LENGTH } from "@/config/contact-form";
 
 export async function POST(request: Request) {
@@ -28,32 +24,10 @@ export async function POST(request: Request) {
       quote: body.quote,
     };
 
-    try {
-      await sendContactEmail(payload);
-    } catch (err) {
-      const code = err instanceof Error ? err.message : "";
+    const result = await notifyContact(payload);
 
-      if (code === "SMTP_NOT_CONFIGURED") {
-        console.error(
-          "[contact] Добавьте SMTP_USER, SMTP_PASS и NOTIFY_EMAIL в .env.local",
-        );
-        return NextResponse.json(
-          { error: "Форма временно недоступна. Напишите на почту или в мессенджер." },
-          { status: 503 },
-        );
-      }
-
-      console.error("[contact] Ошибка отправки email:", err);
-      return NextResponse.json(
-        { error: getEmailErrorMessage(err) },
-        { status: 502 },
-      );
-    }
-
-    try {
-      await sendTelegramMessage(formatContactTelegramMessage(payload));
-    } catch (err) {
-      console.warn("[contact] Telegram не отправлен (заявка уже на почте):", err);
+    if (!result.ok) {
+      return NextResponse.json({ error: result.error }, { status: result.status });
     }
 
     return NextResponse.json({ ok: true });

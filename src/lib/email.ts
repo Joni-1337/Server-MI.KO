@@ -8,7 +8,7 @@ function getSmtpConfig() {
   const host = process.env.SMTP_HOST ?? "smtp.yandex.ru";
   const port = Number(process.env.SMTP_PORT ?? "465");
   const user = process.env.SMTP_USER?.trim().toLowerCase();
-  const pass = process.env.SMTP_PASS?.replace(/\s/g, "");
+  const pass = process.env.SMTP_PASS?.trim().replace(/\s/g, "").replace(/^["']|["']$/g, "");
   const to = (process.env.NOTIFY_EMAIL ?? user)?.trim().toLowerCase();
 
   if (!user || !pass || !to) {

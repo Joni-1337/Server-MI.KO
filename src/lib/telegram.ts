@@ -3,8 +3,8 @@ import { escapeHtml } from "@/lib/escape-html";
 export { escapeHtml };
 
 export async function sendTelegramMessage(text: string): Promise<void> {
-  const token = process.env.TEGRAM_BOT_TOKEN;
-  const chatId = process.env.TEGRAM_CHAT_ID;
+  const token = process.env.TELEGRAM_BOT_TOKEN ?? process.env.TEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID ?? process.env.TEGRAM_CHAT_ID;
 
   if (!token || !chatId) {
     throw new Error("TELEGRAM_NOT_CONFIGURED");
