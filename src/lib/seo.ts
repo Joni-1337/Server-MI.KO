@@ -68,7 +68,12 @@ export const siteMetadata: Metadata = {
     },
   },
   icons: {
-    icon: "/miko-icon.png",
-    apple: "/miko-icon.png",
+    icon: [
+      { url: "/miko-icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/miko-icon.png", type: "image/png" },
+    ],
+    shortcut: "/miko-icon.png",
   },
 };
