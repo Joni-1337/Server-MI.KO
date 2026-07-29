@@ -4,10 +4,26 @@ import {
   type ContactPayload,
 } from "@/lib/contact-message";
 
+function resolveSmtpHost(user: string, explicitHost?: string): string {
+  if (explicitHost) return explicitHost;
+
+  const domain = user.split("@")[1] ?? "";
+
+  if (["mail.ru", "inbox.ru", "bk.ru", "list.ru", "internet.ru"].includes(domain)) {
+    return "smtp.mail.ru";
+  }
+
+  if (domain === "yandex.ru" || domain === "ya.ru" || domain.endsWith(".yandex.ru")) {
+    return "smtp.yandex.ru";
+  }
+
+  return "smtp.yandex.ru";
+}
+
 function getSmtpConfig() {
-  const host = process.env.SMTP_HOST ?? "smtp.yandex.ru";
-  const port = Number(process.env.SMTP_PORT ?? "465");
   const user = process.env.SMTP_USER?.trim().toLowerCase();
+  const host = resolveSmtpHost(user ?? "", process.env.SMTP_HOST?.trim());
+  const port = Number(process.env.SMTP_PORT ?? "465");
   const pass = process.env.SMTP_PASS?.trim().replace(/\s/g, "").replace(/^["']|["']$/g, "");
   const to = (process.env.NOTIFY_EMAIL ?? user)?.trim().toLowerCase();
 
@@ -38,9 +54,14 @@ function createTransporter(config: NonNullable<ReturnType<typeof getSmtpConfig>>
 
 function getEmailErrorMessage(error: unknown): string {
   const err = error as { code?: string; response?: string };
+  const user = process.env.SMTP_USER?.trim().toLowerCase() ?? "";
+  const host = resolveSmtpHost(user, process.env.SMTP_HOST?.trim());
 
   if (err.code === "EAUTH") {
-    return "Ошибка входа в Яндекс. Включите «Почтовые программы» в mail.yandex.ru и проверьте пароль приложения.";
+    if (host.includes("mail.ru")) {
+      return "Ошибка входа в Mail.ru. Проверьте пароль для внешних приложений в настройках почты.";
+    }
+    return "Ошибка входа в почту. Проверьте SMTP-пароль в настройках Vercel или подключите Telegram / Resend.";
   }
 
   if (err.code === "ETIMEDOUT" || err.code === "ESOCKET") {
